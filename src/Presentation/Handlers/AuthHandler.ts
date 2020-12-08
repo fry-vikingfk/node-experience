@@ -24,7 +24,6 @@ import ForgotPasswordUseCase from "../../Domain/UseCases/Auth/ForgotPasswordUseC
 import KeepAliveUseCase from "../../Domain/UseCases/Auth/KeepAliveUseCase";
 
 import ValidatorRequest from "../../Application/Shared/ValidatorRequest";
-import BcryptEncryptionStrategy from "../../Infrastructure/Encryption/BcryptEncryptionStrategy";
 
 @controller('/api/auth')
 class AuthHandler
@@ -39,10 +38,6 @@ class AuthHandler
     {
         const _request = new AuthRequest(req);
         await ValidatorRequest.handle(_request);
-
-        const bcryptEncryptionStrategy = new BcryptEncryptionStrategy();
-
-        // await bcryptEncryptionStrategy.decrypt("1234");
 
         const loginUseCase = new LoginUseCase();
         const payload = await loginUseCase.handle(_request);
